@@ -104,4 +104,13 @@ public class Inscricao implements Serializable{
 			return false;
 		return true;
 	}
+	
+	/*-----------QRCODE-----------*/
+	public Integer getBaseQrcode() {
+		Integer baseQrcode = getUsuario().getCodUsuario();
+		return baseQrcode;
+	}
+	/*-----------QRCODE-----------*/
+
+	
 }

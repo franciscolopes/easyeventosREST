@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="ISO-8859-1">
+    <title>TESTE LEITOR DE QR CODE - Instascan</title>
+    <script type="text/javascript" src="js/instascan.min.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    
+    <style>
+		body {
+    		background-color: lightblue;
+		}
+		h1 {
+			font-family:arial;
+    		color: white;
+    		text-align: center;
+		}
+		video {
+			border: solid yellow 2px;
+			width:350px;
+			height:350px;
+			position:absolute;
+			top:20%;
+			left:40%;
+			margin-top:-50px;
+			margin-left:-50px;
+		}
+		input{
+			font-size: 40px;
+		
+		}
+	</style>
+	<script>
+		$(document).ready(function(){
+		    $("input").change(function(){
+		        alert("The text has been changed.");
+		    });
+		});
+	</script>
+	
+  </head>
+  
+  <body>
+  
+  	<h1>Captura de QR Code</h1>
+  	
+    <video id="preview" width="350" height="350" ></video>
+    <br>
+    
+    <input type="text" id="conteudoQrcode" value="teste">
+    
+    <br>
+    
+    <!-- <img src="http://localhost:8080/qrcode/2" alt="qrcode" width="350" height="350">  -->
+    
+    <script type="text/javascript">
+      
+      
+      var scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+      
+      scanner.addListener('scan', function (content) {
+        
+    	  console.log(content);
+    	  
+    	  document.getElementById("conteudoQrcode").value = content;
+        
+      
+    	  /*--------TESTANDO JQUERY------------*/
+    	  $(function(){
+    		   $("input").val(content);
+    		
+    		   alert("Conteudo do qr code: "+typeof(content));
+    		   alert("Conteudo do campo de texto: "+$("input").val());
+    		   //ajaxPost();
+    		   limpaCampo();
+    		   alert("EXECUTOU");
+    		   $.get("http://localhost:8080/qrcode/frequencia?qrcodeString="+content, function(responseText) {
+    			   $("h1").text(responseText); });
+    	  /*--------TESTANDO JQUERY------------*/
+
+    	  });
+    	  /*--------REQUISIÇÃO POST------------*/
+    	  function ajaxPost(){
+  	    	
+  	    	
+
+  	    	$.ajax({
+  				type : "POST",
+  				contentType : "application/json",
+  				url : "http://localhost:8080/qrcode/frequencia",
+  				data : {
+  					
+  					"qrcodeString": $("input").val()
+  					
+  				},
+  				dataType : 'json',
+  				timeout : 100000,
+  				success : function(data) {
+  					console.log("SUCCESS: ", data);
+  					display(data);
+  				},
+  				error : function(e) {
+  					console.log("ERROR: ", e);
+  					display(e);
+  				},
+  				done : function(e) {
+  					console.log("DONE");
+  				}
+  			});
+    	  }
+
+      	  /*--------REQUISIÇÃO POST------------*/
+  	    	
+  	    	function limpaCampo(){
+    	    	$("input").val("");
+    	    	
+    	    }
+
+      });
+      
+      
+      Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
+        }
+      }).catch(function (e) {
+        console.error(e);
+        console.log(e);
+      });
+      
+      
+    </script>
+  </body>
+</html>
+
+
+

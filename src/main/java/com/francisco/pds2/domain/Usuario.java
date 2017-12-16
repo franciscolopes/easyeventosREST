@@ -1,5 +1,7 @@
 package com.francisco.pds2.domain;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,6 +15,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.francisco.pds2.domain.enums.CategoriaUsuario;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 @Entity
 public class Usuario implements Serializable{
@@ -133,7 +140,17 @@ public class Usuario implements Serializable{
 	}
 	
 
-	
+	/*-----------QRCODE-----------*/
+	public byte[] getQrcode(String baseQrcode, int largura, int altura) throws WriterException, IOException {
+	    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+	    BitMatrix bitMatrix = qrCodeWriter.encode(baseQrcode, BarcodeFormat.QR_CODE, largura, altura);
+	    
+	    ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+	    MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
+	    byte[] pngData = pngOutputStream.toByteArray(); 
+	    return pngData;
+	}
+	/*-----------QRCODE-----------*/
 	
 	
 

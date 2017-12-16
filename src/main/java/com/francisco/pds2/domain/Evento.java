@@ -123,4 +123,13 @@ public class Evento implements Serializable{
 		return true;
 	}
 	
+	/*-----------DETERMINA PRESENA MINIMA DA ATIVIDADE-----------*/
+	public int getPresencaMinima() {
+		int qtdeAtividades = getAtividades().size();
+		int presencaMin = Math.round((qtdeAtividades * 75))/100;
+		return presencaMin;
+	}
+	/*-----------DETERMINA PRESENA MINIMA DA ATIVIDADE-----------*/
+	
+	
 }
