@@ -1,11 +1,18 @@
 package com.francisco.pds2.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.francisco.pds2.domain.enums.CategoriaUsuario;
 
 @Entity
 public class Usuario implements Serializable{
@@ -20,19 +27,41 @@ public class Usuario implements Serializable{
 	private String cpf;
 	private Integer categoria;
 
+	@OneToMany(mappedBy="id.usuario")
+	private Set<Inscricao> inscricoes = new HashSet<>();
+	
+	
 	public Usuario() {
 
 	}
 
-	public Usuario(Integer codUsuario, String nome, String email, String cpf/*, CategoriaUsuario categoria*/) {
+	public Usuario(Integer codUsuario, String nome, String email, String cpf, CategoriaUsuario categoria) {
 		super();
 		this.codUsuario = codUsuario;
 		this.nome = nome;
 		this.email = email;
 		this.cpf = cpf;
-		//this.categoria = (categoria==null) ? null : categoria.getCod();
+		this.categoria = (categoria==null) ? null : categoria.getCod();
 	}
 
+	
+	
+	public List<Atividade> getAtividades() {
+		List<Atividade> lista = new ArrayList<>();
+		for (Inscricao x : inscricoes) {
+			lista.add(x.getAtividade());
+		}
+		return lista;
+	}
+	
+	public Set<Inscricao> getInscricoes() {
+		return inscricoes;
+	}
+
+	public void setInscricoes(Set<Inscricao> inscricoes) {
+		this.inscricoes = inscricoes;
+	}
+	
 	public Integer getCodUsuario() {
 		return codUsuario;
 	}
@@ -65,15 +94,9 @@ public class Usuario implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public Integer getCategoria() {
-		return categoria;
-	}
+	
 
-	public void setCategoria(Integer categoria) {
-		this.categoria = categoria;
-	}
-
-	/*
+	
 	 public CategoriaUsuario getCategoria() {
 		return CategoriaUsuario.toEnum(categoria);
 	}
@@ -81,7 +104,7 @@ public class Usuario implements Serializable{
 	public void setCategoria(CategoriaUsuario categoria) {
 		this.categoria = categoria.getCod();
 	}
-	 */
+	
 	
 	
 	@Override
