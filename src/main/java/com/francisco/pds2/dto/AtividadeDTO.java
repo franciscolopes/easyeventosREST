@@ -3,6 +3,8 @@ package com.francisco.pds2.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -23,19 +25,19 @@ public class AtividadeDTO implements Serializable {
 	@Length(min=5, max=80, message="O tamanho deve ser entre 5 e 80 caracteres")
 	private String ministrante;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotNull(message="Preenchimento obrigatório")
 	@JsonFormat(pattern="hh:mm")
 	private Date horarioInicio;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotNull(message="Preenchimento obrigatório")
 	@JsonFormat(pattern="hh:mm")
 	private Date horarioFim;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotNull(message="Preenchimento obrigatório")
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataInicio;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotNull(message="Preenchimento obrigatório")
 	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataFim;
 	
@@ -44,13 +46,13 @@ public class AtividadeDTO implements Serializable {
 	@Length(min=5, max=500, message="O tamanho deve ser entre 5 e 500 caracteres")
 	private String descricao;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotNull(message="Preenchimento obrigatório")
 	private Integer nroVagas;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String tipoAtividade;
 	
-	@NotEmpty(message="Preenchimento obrigatório")
+	@NotNull(message="Preenchimento obrigatório")
 	private Boolean inscricaoAberta;
 	private Boolean atividadeAtiva;
 	
@@ -158,6 +160,22 @@ public class AtividadeDTO implements Serializable {
 
 	public void setMinistrante(String ministrante) {
 		this.ministrante = ministrante;
+	}
+
+	public Date getHorarioInicio() {
+		return horarioInicio;
+	}
+
+	public void setHorarioInicio(Date horarioInicio) {
+		this.horarioInicio = horarioInicio;
+	}
+
+	public Date getHorarioFim() {
+		return horarioFim;
+	}
+
+	public void setHorarioFim(Date horarioFim) {
+		this.horarioFim = horarioFim;
 	}
 	
 }

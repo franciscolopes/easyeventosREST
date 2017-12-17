@@ -3,6 +3,7 @@ package com.francisco.pds2.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -10,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.francisco.pds2.domain.Atividade;
 import com.francisco.pds2.domain.Evento;
-import com.francisco.pds2.dto.EventoDTO;
+import com.francisco.pds2.dto.AtividadeDTO;
 import com.francisco.pds2.repositories.AtividadeRepository;
+import com.francisco.pds2.services.exceptions.DataIntegrityException;
 import com.francisco.pds2.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -39,9 +41,69 @@ public class AtividadeService {
 		return atividadeRepo.findAll(pageRequest);
 	}
 
-	/*public Atividade fromDTO(AtividadeDTO objDto) {
-		return new Atividade(objDto.getCodEvento(), objDto.getNome(), objDto.getDataInicio(), objDto.getDataFim(), objDto.getDescricao());
-	}*/
+	public Atividade fromDTO(AtividadeDTO objDto) {
+		
+		//throw new UnsupportedOperationException();
+		
+		return new Atividade(
+			objDto.getCodAtividade(),
+			objDto.getNome(),
+			objDto.getMinistrante(),
+			objDto.getHorarioInicio(),
+			objDto.getHorarioFim(), 
+			objDto.getDataInicio(), 
+			objDto.getDataFim(), 
+			objDto.getDescricao(),
+			objDto.getNroVagas(), 
+			objDto.getTipoAtividade(), 
+			objDto.getInscricaoAberta(), 
+			objDto.getAtividadeAtiva(), 
+			null);
+	
+	}
+	
+	
+	
+	public Atividade update(Atividade obj) {
+		Atividade newObj = buscar(obj.getCodAtividade());
+		updateData(newObj, obj);
+		return atividadeRepo.save(newObj);
+	}
+	
+	private void updateData(Atividade newObj, Atividade obj) {
+
+		newObj.setNome(obj.getNome());
+		newObj.setMinistrante(obj.getMinistrante()) ;
+		newObj.setHorarioInicio(obj.getHorarioInicio());
+		newObj.setHorarioFim(obj.getHorarioFim()) ;
+		newObj.setDataInicio(obj.getDataInicio()) ;
+		newObj.setDataFim(obj.getDataFim());
+		newObj.setDescricao(obj.getDescricao());
+		newObj.setNroVagas(obj.getNroVagas());
+		newObj.setTipoAtividade(obj.getTipoAtividade()); 
+		newObj.setInscricaoAberta(obj.getInscricaoAberta()); 
+		newObj.setAtividadeAtiva(obj.getAtividadeAtiva()); 
+	}
+	
+	
+	
+
+	public void delete(Integer codAtividade) {
+		buscar(codAtividade);
+		try {
+			atividadeRepo.delete(codAtividade);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possível excluir pois há entidades relacionadas");
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
