@@ -1,4 +1,5 @@
 package com.francisco.pds2.resources;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,10 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.francisco.pds2.domain.Atividade;
+import com.francisco.pds2.domain.Evento;
 import com.francisco.pds2.domain.Atividade;
 import com.francisco.pds2.dto.AtividadeDTO;
+import com.francisco.pds2.dto.EventoDTO;
 import com.francisco.pds2.dto.AtividadeDTO;
 import com.francisco.pds2.services.AtividadeService;
 
@@ -33,6 +37,20 @@ public class AtividadeResource {
 		Atividade obj = service.buscar(codAtividade);
 		return ResponseEntity.ok().body(obj/*.getInscricoes()*/);	
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody AtividadeDTO objDto) {
+		Atividade obj = service.fromDTO(objDto);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codAtividade}")
+				.buildAndExpand(obj.getCodAtividade()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	
+	
+	
+	
 	
 	
 	@RequestMapping(value = "/{codAtividade}", method = RequestMethod.PUT)
