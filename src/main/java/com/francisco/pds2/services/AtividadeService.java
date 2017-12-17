@@ -53,26 +53,6 @@ public class AtividadeService {
 
 	/*--------INSERT--------*/
 	
-	
-	public List<Atividade> findAll() {
-		return atividadeRepo.findAll();
-	}
-
-	public Page<Atividade> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return atividadeRepo.findAll(pageRequest);
-	}
-
-	public Atividade fromDTO(AtividadeDTO objDto) {
-
-		return new Atividade(objDto.getCodAtividade(), objDto.getNome(), objDto.getMinistrante(),
-				objDto.getHorarioInicio(), objDto.getHorarioFim(), objDto.getDataInicio(), objDto.getDataFim(),
-				objDto.getDescricao(), objDto.getNroVagas(), objDto.getTipoAtividade(), objDto.getInscricaoAberta(),
-				objDto.getAtividadeAtiva(), null);
-
-	}
-
-	
 	/*------INSERT NOVA ATIVIDADE--------*/
 	public Atividade fromDTO(AtividadeNewDTO objDto) {
 
@@ -96,6 +76,29 @@ public class AtividadeService {
 		return atividade;
 	}
 	/*------INSERT NOVA ATIVIDADE--------*/
+
+	
+	
+	
+	public List<Atividade> findAll() {
+		return atividadeRepo.findAll();
+	}
+
+	public Page<Atividade> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return atividadeRepo.findAll(pageRequest);
+	}
+
+	public Atividade fromDTO(AtividadeDTO objDto) {
+
+		return new Atividade(objDto.getCodAtividade(), objDto.getNome(), objDto.getMinistrante(),
+				objDto.getHorarioInicio(), objDto.getHorarioFim(), objDto.getDataInicio(), objDto.getDataFim(),
+				objDto.getDescricao(), objDto.getNroVagas(), objDto.getTipoAtividade(), objDto.getInscricaoAberta(),
+				objDto.getAtividadeAtiva(), null);
+
+	}
+
+	
 
 	public Atividade update(Atividade obj) {
 		Atividade newObj = buscar(obj.getCodAtividade());

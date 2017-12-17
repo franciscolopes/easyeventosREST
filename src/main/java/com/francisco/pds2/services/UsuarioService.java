@@ -10,7 +10,9 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.francisco.pds2.domain.Usuario;
+import com.francisco.pds2.domain.enums.CategoriaUsuario;
 import com.francisco.pds2.dto.UsuarioDTO;
+import com.francisco.pds2.dto.UsuarioNewDTO;
 import com.francisco.pds2.repositories.UsuarioRepository;
 import com.francisco.pds2.services.exceptions.DataIntegrityException;
 import com.francisco.pds2.services.exceptions.ObjectNotFoundException;
@@ -49,6 +51,31 @@ public class UsuarioService {
 
 		return obj;
 	}
+	
+	
+	
+	/*--------INSERT--------*/
+	public Usuario insert(Usuario obj) {
+		obj.setCodUsuario(null);
+		obj = usuarioRepo.save(obj);
+		
+		return obj;
+	}
+
+	/*--------INSERT--------*/
+	
+	/*------INSERT NOVO USUARIO--------*/
+	public Usuario fromDTO(UsuarioNewDTO objDto) {
+
+		Usuario usuario = new Usuario(null, objDto.getNome(), 
+				objDto.getEmail(), objDto.getCpf(), 
+				CategoriaUsuario.toEnum(objDto.getCategoria()));
+		//usuarioRepo.save(usuario);
+	
+		return usuario;
+	}
+	/*------INSERT NOVO USUARIO--------*/
+
 
 	public Usuario update(Usuario obj) {
 		Usuario newObj = find(obj.getCodUsuario());

@@ -1,5 +1,6 @@
 package com.francisco.pds2.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.francisco.pds2.domain.Usuario;
 import com.francisco.pds2.dto.UsuarioDTO;
+import com.francisco.pds2.dto.UsuarioNewDTO;
 import com.francisco.pds2.services.UsuarioService;
 
 @RestController
@@ -33,6 +36,24 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(obj);
 
 	}
+	
+	
+	
+	/*------NOVO USUARIO--------*/
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody UsuarioNewDTO objDto) {
+		Usuario obj = service.fromDTO(objDto);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codUsuario}")
+				.buildAndExpand(obj.getCodUsuario()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+	/*------NOVO USUARIO--------*/
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/{codUsuario}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody UsuarioDTO objDto, @PathVariable Integer codUsuario) {
