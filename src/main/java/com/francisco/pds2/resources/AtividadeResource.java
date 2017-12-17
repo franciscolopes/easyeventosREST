@@ -1,11 +1,16 @@
 package com.francisco.pds2.resources;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.francisco.pds2.domain.Atividade;
+import com.francisco.pds2.dto.AtividadeDTO;
 import com.francisco.pds2.services.AtividadeService;
 
 @RestController
@@ -21,4 +26,15 @@ public class AtividadeResource {
 		Atividade obj = service.buscar(codAtividade);
 		return ResponseEntity.ok().body(obj/*.getInscricoes()*/);	
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<AtividadeDTO>> findAll() {
+		List<Atividade> list = service.findAll();
+		List<AtividadeDTO> listDto = list.stream().map(obj -> new AtividadeDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	
+	
 }
