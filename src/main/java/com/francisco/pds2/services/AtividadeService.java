@@ -43,13 +43,17 @@ public class AtividadeService {
 		return obj;
 	}
 
+	/*--------INSERT--------*/
 	public Atividade insert(Atividade obj) {
-		obj.setCodAtividade(null);
+		//obj.setCodAtividade(null);
 		obj = atividadeRepo.save(obj);
 		
 		return obj;
 	}
 
+	/*--------INSERT--------*/
+	
+	
 	public List<Atividade> findAll() {
 		return atividadeRepo.findAll();
 	}
@@ -68,22 +72,30 @@ public class AtividadeService {
 
 	}
 
+	
+	/*------INSERT NOVA ATIVIDADE--------*/
 	public Atividade fromDTO(AtividadeNewDTO objDto) {
 
 		Evento evento = eventoRepo.findOne(objDto.getCodEvento());
-		Atividade atividade = new Atividade(null, objDto.getNomeAtividade(), objDto.getMinistrante(),
-				objDto.getHorarioInicio(), objDto.getHorarioFim(), objDto.getDataInicioAtividade(),
-				objDto.getDataFimAtividade(), objDto.getDescricaoAtividade(), objDto.getNroVagas(),
+		Local local = localRepo.findOne(objDto.getCodLocal());
+		Atividade atividade = new Atividade(null, objDto.getNome(), objDto.getMinistrante(),
+				objDto.getHorarioInicio(), objDto.getHorarioFim(), objDto.getDataInicio(),
+				objDto.getDataFim(), objDto.getDescricao(), objDto.getNroVagas(),
 				objDto.getTipoAtividade(), objDto.getInscricaoAberta(), objDto.getAtividadeAtiva(), evento);
 
-		Local local = localRepo.findOne(objDto.getCodLocal());
-
+		//atividadeRepo.save(atividade);
+		
 		atividade.setLocal(local);
-
+		
+		atividadeRepo.save(atividade);
+		local.setAtividade(atividade);
+		localRepo.save(local);
+		
 		evento.getAtividades().addAll(Arrays.asList(atividade));
 	
 		return atividade;
 	}
+	/*------INSERT NOVA ATIVIDADE--------*/
 
 	public Atividade update(Atividade obj) {
 		Atividade newObj = buscar(obj.getCodAtividade());

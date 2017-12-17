@@ -75,11 +75,14 @@ public class EasyeventosRestApplication implements CommandLineRunner {
 		Local local4 = new Local(null, "Sala 20", "Sala de aula do campus", 30, a4);
 		a4.setLocal(local4);
 		
+		
+		Local local5 = new Local(null, "Sala 22", "Sala de aula do campus", 45, null);
+		
 		evento1.getAtividades().addAll(Arrays.asList(a1, a2));
 		evento2.getAtividades().addAll(Arrays.asList(a3, a4));
 		
 		atividadeRepository.save(Arrays.asList(a1, a2, a3, a4));
-		localRepository.save(Arrays.asList(local1, local2, local3, local4));
+		localRepository.save(Arrays.asList(local1, local2, local3, local4,local5));
 		
 		Inscricao inscricao1 = new Inscricao(usuario1, a1, sdf.parse("20/10/2017"), false, "KJYHT");
 		Inscricao inscricao2 = new Inscricao(usuario1, a4, sdf.parse("21/10/2017"), false,"P)*J&");

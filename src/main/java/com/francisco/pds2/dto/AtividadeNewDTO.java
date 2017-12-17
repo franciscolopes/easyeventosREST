@@ -3,40 +3,65 @@ package com.francisco.pds2.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class AtividadeNewDTO  implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 
-	/*atividade*/
-	private String nomeAtividade;
+	@NotNull(message="Preenchimento obrigatório")
+	private String nome;
+	
+	@NotNull(message="Preenchimento obrigatório")
 	private String ministrante;
+	
+	@NotNull(message="Preenchimento obrigatório")
+	@JsonFormat(pattern="hh:mm")
 	private Date horarioInicio;
+	
+	@NotNull(message="Preenchimento obrigatório")
+	@JsonFormat(pattern="hh:mm")
 	private Date horarioFim;
-	private Date dataInicioAtividade;
-	private Date dataFimAtividade;
-	private String descricaoAtividade;
+	
+	@NotNull(message="Preenchimento obrigatório")
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private Date dataInicio;
+	
+	@NotNull(message="Preenchimento obrigatório")
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private Date dataFim;
+	
+	@NotNull(message="Preenchimento obrigatório")
+	private String descricao;
+	
+	@NotNull(message="Preenchimento obrigatório")
 	private Integer nroVagas;
+	
+	@NotNull(message="Preenchimento obrigatório")
 	private String tipoAtividade;
+	
 	private Boolean inscricaoAberta;
 	private Boolean atividadeAtiva;
 
-	/*evento*/
+	
 	private Integer codEvento;
 	
-	/*local*/
+	
 	private Integer codLocal;
 	
 	public AtividadeNewDTO() {
 		
 	}
 
-	public String getNomeAtividade() {
-		return nomeAtividade;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setNomeAtividade(String nomeAtividade) {
-		this.nomeAtividade = nomeAtividade;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getMinistrante() {
@@ -63,28 +88,28 @@ public class AtividadeNewDTO  implements Serializable{
 		this.horarioFim = horarioFim;
 	}
 
-	public Date getDataInicioAtividade() {
-		return dataInicioAtividade;
+	public Date getDataInicio() {
+		return dataInicio;
 	}
 
-	public void setDataInicioAtividade(Date dataInicioAtividade) {
-		this.dataInicioAtividade = dataInicioAtividade;
+	public void setDataInicioAtividade(Date dataInicio) {
+		this.dataInicio = dataInicio;
 	}
 
-	public Date getDataFimAtividade() {
-		return dataFimAtividade;
+	public Date getDataFim() {
+		return dataFim;
 	}
 
-	public void setDataFimAtividade(Date dataFimAtividade) {
-		this.dataFimAtividade = dataFimAtividade;
+	public void setDataFimAtividade(Date dataFim) {
+		this.dataFim = dataFim;
 	}
 
-	public String getDescricaoAtividade() {
-		return descricaoAtividade;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setDescricaoAtividade(String descricaoAtividade) {
-		this.descricaoAtividade = descricaoAtividade;
+	public void setDescricaoAtividade(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public Integer getNroVagas() {

@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.francisco.pds2.domain.Atividade;
-import com.francisco.pds2.domain.Evento;
-import com.francisco.pds2.domain.Atividade;
 import com.francisco.pds2.dto.AtividadeDTO;
-import com.francisco.pds2.dto.EventoDTO;
-import com.francisco.pds2.dto.AtividadeDTO;
+import com.francisco.pds2.dto.AtividadeNewDTO;
 import com.francisco.pds2.services.AtividadeService;
 
 @RestController
@@ -38,20 +35,16 @@ public class AtividadeResource {
 		return ResponseEntity.ok().body(obj/*.getInscricoes()*/);	
 	}
 	
-	
+	/*------NOVA ATIVIDADE--------*/
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody AtividadeDTO objDto) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody AtividadeNewDTO objDto) {
 		Atividade obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{codAtividade}")
 				.buildAndExpand(obj.getCodAtividade()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
-	
-	
-	
-	
+	/*------NOVA ATIVIDADE--------*/
 	
 	@RequestMapping(value = "/{codAtividade}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody AtividadeDTO objDto, @PathVariable Integer codAtividade) {
