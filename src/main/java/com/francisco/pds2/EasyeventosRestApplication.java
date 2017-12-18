@@ -50,6 +50,7 @@ public class EasyeventosRestApplication implements CommandLineRunner {
 		Usuario usuario1 = new Usuario(null, "Maria","maria@gmail.com","10098415871",CategoriaUsuario.SERVIDOR);
 		Usuario usuario2 = new Usuario(null, "Celio","celio@gmail.com","96098515871",CategoriaUsuario.ALUNO);
 		Usuario usuario3 = new Usuario(null, "Alan","alan@gmail.com","15668415871",CategoriaUsuario.VISITANTE);
+		
 		usuarioRepository.save(Arrays.asList(usuario1, usuario2, usuario3));
 		
 		Evento evento1 = new Evento (null, "SNCT2017",sdf.parse("23/10/2017"),sdf.parse("27/10/2017"),"A Semana Nacional de Ciência e Tecnologia - SNCT - é coordenada pelo Ministério de Ciência e Tecnologia e tem como objetivo aproximar a Ciência e a Tecnologia da população.");

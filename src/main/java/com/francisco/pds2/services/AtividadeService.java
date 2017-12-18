@@ -79,7 +79,18 @@ public class AtividadeService {
 
 	
 	
+	/*------BUSCA ATIVIDADES POR USUARIO--------
 	
+	
+	public Page<Atividade> search(Integer codUsuario, Integer page, Integer linesPerPage, String orderBy, String direction) {
+ 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+ 		
+ 		return atividadeRepo.findBycodUsuario(codUsuario, pageRequest);	
+ 	}
+	
+
+	/*------BUSCA ATIVIDADES POR USUARIO--------*/
+
 	public List<Atividade> findAll() {
 		return atividadeRepo.findAll();
 	}
