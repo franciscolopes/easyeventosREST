@@ -27,22 +27,7 @@ public class QrcodeResource {
 	private UsuarioService service;
 	
 
-	@RequestMapping(value = "/frequencia", method = RequestMethod.GET)
-	public ResponseEntity<Integer> postFrequencia(@RequestParam(value = "qrcodeString", required = true) String qrcodeString) throws WriterException, IOException {
-//enviar como parametro o codigo do bloco
-		
-		int codBloco = 1;
-//		int freq =qrcodeString.length(); 
-		int codUsuario = Integer.parseInt(qrcodeString); 
-		//Usuario obj = service.find(codUsuario);
-		//boolean presente = service.verificaUsuarioCadastrado(codUsuario, codBloco);
-		
-		
-		ResponseEntity<Integer> responseEntity = new ResponseEntity<>(codUsuario, HttpStatus.OK);
-		return responseEntity;
-		
-
-	}
+	
 
 	@RequestMapping(value = "/{codUsuario}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> geraImagemQrcode(@PathVariable Integer codUsuario)
