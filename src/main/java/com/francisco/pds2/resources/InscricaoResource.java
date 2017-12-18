@@ -54,7 +54,8 @@ public class InscricaoResource {
 		String msg = "";
 		if(inscricao != null) {
 			inscricao.setPresente(true);
-			msg = "Presença do participante "+ usuario.getNome() + " confirmada na atividade "+atividade.getNome();
+			inscricaoService.marcaPresenca(inscricao);
+			msg = "sdfgsd"+inscricao.getPresente()+" Presença do participante "+ usuario.getNome() + " confirmada na atividade "+atividade.getNome()+". Cod inscricao:"+inscricao.getCodigoCertificado() ;
 		}else {
 			msg = "O usuádio  "+ usuario.getNome() + " não está cadastrado na atividade "+atividade.getNome();
 			

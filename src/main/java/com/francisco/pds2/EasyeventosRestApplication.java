@@ -89,17 +89,20 @@ public class EasyeventosRestApplication implements CommandLineRunner {
 		Inscricao inscricao2 = new Inscricao(usuario1, a4, sdf.parse("21/10/2017"), false,"P)*J&");
 		Inscricao inscricao3 = new Inscricao(usuario2, a2, sdf.parse("10/10/2017"), false,"iuytr");
 		Inscricao inscricao4 = new Inscricao(usuario3, a3, sdf.parse("17/10/2017"), false,"ftrgy");
+		Inscricao inscricao5 = new Inscricao(usuario1, a2, sdf.parse("20/10/2017"), false, "XXXXX");
+		
 		
 		a1.getInscricoes().addAll(Arrays.asList(inscricao1));
 		a2.getInscricoes().addAll(Arrays.asList(inscricao3));
+		a2.getInscricoes().addAll(Arrays.asList(inscricao5));
 		a3.getInscricoes().addAll(Arrays.asList(inscricao4));
 		a4.getInscricoes().addAll(Arrays.asList(inscricao2));
 		
-		usuario1.getInscricoes().addAll(Arrays.asList(inscricao1, inscricao2));
+		usuario1.getInscricoes().addAll(Arrays.asList(inscricao1, inscricao2, inscricao5));
 		usuario2.getInscricoes().addAll(Arrays.asList(inscricao3));
 		usuario3.getInscricoes().addAll(Arrays.asList(inscricao4));
 		
-		inscricaoRepository.save(Arrays.asList(inscricao1, inscricao2, inscricao3, inscricao4));
+		inscricaoRepository.save(Arrays.asList(inscricao1, inscricao2, inscricao3, inscricao4, inscricao5));
 		
 		
 	}

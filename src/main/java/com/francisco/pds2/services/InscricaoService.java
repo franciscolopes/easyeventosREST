@@ -47,6 +47,16 @@ public class InscricaoService {
 	}
 	/*------INSERT --------*/
 
+	
+	
+	public void marcaPresenca(Inscricao inscricao) {
+		inscricaoRepo.save(inscricao);
+	}
+	
+	
+	
+	
+	
 	/*------INSERT NOVA INSCRIÇÃO--------*/
 	public Inscricao fromDTO(InscricaoNewDTO objDto) {
 
