@@ -41,10 +41,20 @@ public class Inscricao implements Serializable{
 		return id.getUsuario();
 	}
 	
+	
+	public void setUsuario(Usuario usuario) {
+		id.setUsuario(usuario);
+	}
+	
 	@JsonIgnore
 	public Atividade getAtividade() {
 		return id.getAtividade();
 	}
+	
+	public void setAtividade(Atividade atividade) {
+		id.setAtividade(atividade);
+	}
+	
 	
 	public InscricaoPK getId() {
 		return id;
