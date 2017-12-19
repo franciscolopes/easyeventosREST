@@ -140,5 +140,13 @@ public class AtividadeService {
 			throw new DataIntegrityException("Não é possível excluir pois há entidades relacionadas");
 		}
 	}
+	
+	public Page<Atividade> buscaAtividadePorEvento(Integer codEvento, Integer page, Integer linesPerPage,
+ 			String orderBy, String direction) {
+ 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+ 		
+ 		return atividadeRepo.findByEventoCodEvento(codEvento, pageRequest);
+ 	}
+	
 
 }
