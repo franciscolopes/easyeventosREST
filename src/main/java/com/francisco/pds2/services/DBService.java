@@ -43,7 +43,7 @@ public class DBService {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm");
 		
-		Usuario usuario1 = new Usuario(null, "Maria","maria@gmail.com","10098415871",CategoriaUsuario.SERVIDOR);
+		Usuario usuario1 = new Usuario(null, "Maria","eearg.ti.francisco@gmail.com","10098415871",CategoriaUsuario.SERVIDOR);
 		Usuario usuario2 = new Usuario(null, "Celio","celio@gmail.com","96098515871",CategoriaUsuario.ALUNO);
 		Usuario usuario3 = new Usuario(null, "Alan","alan@gmail.com","15668415871",CategoriaUsuario.VISITANTE);
 		
