@@ -14,6 +14,7 @@ import com.francisco.pds2.domain.Inscricao;
 import com.francisco.pds2.domain.Local;
 import com.francisco.pds2.domain.Usuario;
 import com.francisco.pds2.domain.enums.CategoriaUsuario;
+import com.francisco.pds2.domain.enums.Perfil;
 import com.francisco.pds2.repositories.AtividadeRepository;
 import com.francisco.pds2.repositories.EventoRepository;
 import com.francisco.pds2.repositories.InscricaoRepository;
@@ -51,8 +52,10 @@ public class DBService {
 		Usuario usuario1 = new Usuario(null, "Maria",pe.encode("123"),"eearg.ti.francisco@gmail.com","10098415871",CategoriaUsuario.SERVIDOR);
 		Usuario usuario2 = new Usuario(null, "Celio",pe.encode("456"),"celio@gmail.com","96098515871",CategoriaUsuario.ALUNO);
 		Usuario usuario3 = new Usuario(null, "Alan",pe.encode("789"),"alan@gmail.com","15668415871",CategoriaUsuario.VISITANTE);
+		Usuario usuario4 = new Usuario(null, "Carlos",pe.encode("333"),"carlos@gmail.com","10090518074",CategoriaUsuario.SERVIDOR);
+		usuario4.addPerfil(Perfil.ADMIN);
 		
-		usuarioRepository.save(Arrays.asList(usuario1, usuario2, usuario3));
+		usuarioRepository.save(Arrays.asList(usuario1, usuario2, usuario3, usuario4));
 		
 		Evento evento1 = new Evento (null, "SNCT2017",sdf.parse("23/10/2017"),sdf.parse("27/10/2017"),"A Semana Nacional de Ciência e Tecnologia - SNCT - é coordenada pelo Ministério de Ciência e Tecnologia e tem como objetivo aproximar a Ciência e a Tecnologia da população.");
 		Evento evento2 = new Evento (null, "3ª Mostra de Trabalhos do IFTM",sdf.parse("24/10/2017"),sdf.parse("24/10/2017")," Mostra de Trabalhos da Semana Nacional de Ciência e Tecnologia, a ocorrer no IFTM Campus Uberlândia Centro.");
