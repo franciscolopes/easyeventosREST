@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 import com.francisco.pds2.domain.Atividade;
 import com.francisco.pds2.domain.Evento;
 import com.francisco.pds2.domain.Local;
+import com.francisco.pds2.domain.Usuario;
 import com.francisco.pds2.dto.AtividadeDTO;
 import com.francisco.pds2.dto.AtividadeNewDTO;
 import com.francisco.pds2.repositories.AtividadeRepository;
 import com.francisco.pds2.repositories.EventoRepository;
 import com.francisco.pds2.repositories.LocalRepository;
+import com.francisco.pds2.repositories.UsuarioRepository;
 import com.francisco.pds2.services.exceptions.DataIntegrityException;
 import com.francisco.pds2.services.exceptions.ObjectNotFoundException;
 
@@ -32,6 +34,10 @@ public class AtividadeService {
 
 	@Autowired
 	private LocalRepository localRepo;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepo;
+	
 
 	public Atividade buscar(Integer codAtividade) {
 		Atividade obj = atividadeRepo.findOne(codAtividade);
@@ -147,6 +153,14 @@ public class AtividadeService {
  		
  		return atividadeRepo.findByEventoCodEvento(codEvento, pageRequest);
  	}
+	
+	public Page<Atividade> buscaAtividadePorUsuario(Integer codUsuario, Integer page, Integer linesPerPage,
+ 			String orderBy, String direction) {
+ 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+ 		Usuario usuario = usuarioRepo.findOne(codUsuario);
+ 		return atividadeRepo.findByInscricoesIdUsuario(usuario, pageRequest);
+ 	}
+	
 	
 
 }

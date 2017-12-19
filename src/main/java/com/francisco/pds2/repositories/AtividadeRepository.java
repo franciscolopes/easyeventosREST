@@ -7,12 +7,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.francisco.pds2.domain.Atividade;
+import com.francisco.pds2.domain.Usuario;
 
 @Repository//um objeto desse evento é capaz de realizar operações de acesso a dados referente a objetos atividade
 public interface AtividadeRepository extends JpaRepository<Atividade, Integer>{
 	
 	@Transactional(readOnly=true)
 	Page<Atividade> findByEventoCodEvento(Integer codEvento, Pageable pageRequest);
+	
+	@Transactional(readOnly=true)
+	Page<Atividade> findByInscricoesIdUsuario(Usuario usuario, Pageable pageRequest);
+	
 	
 	
 }

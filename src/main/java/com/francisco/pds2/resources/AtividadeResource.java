@@ -83,7 +83,7 @@ public class AtividadeResource {
 	}
 	
 	@RequestMapping(value = "/rel", method = RequestMethod.GET)
-	  	public ResponseEntity<Page<AtividadeDTO>> findPage2(
+	  	public ResponseEntity<Page<AtividadeDTO>> findPage(
 	  			@RequestParam(value = "codEvento", defaultValue = "0") Integer codEvento,
 	  			@RequestParam(value = "page", defaultValue = "0") Integer page,
 	  			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
@@ -95,7 +95,17 @@ public class AtividadeResource {
 	  	}
 	
 	
-	
+	@RequestMapping(value = "/rel2", method = RequestMethod.GET)
+  	public ResponseEntity<Page<AtividadeDTO>> findPage2(
+  			@RequestParam(value = "codUsuario", defaultValue = "0") Integer codUsuario,
+  			@RequestParam(value = "page", defaultValue = "0") Integer page,
+  			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+  			@RequestParam(value = "orderBy", defaultValue = "dataInicio") String orderBy,
+  			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+  		Page<Atividade> list = service.buscaAtividadePorUsuario(codUsuario,page, linesPerPage, orderBy, direction);
+  		Page<AtividadeDTO> listDto = list.map(obj -> new AtividadeDTO(obj));
+  		return ResponseEntity.ok().body(listDto);
+  	}
 	
 	
 	
