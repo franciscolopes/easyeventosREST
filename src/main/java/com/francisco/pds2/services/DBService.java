@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.francisco.pds2.domain.Atividade;
@@ -23,6 +24,10 @@ import com.francisco.pds2.repositories.UsuarioRepository;
 @Service
 public class DBService {
 
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
@@ -43,9 +48,9 @@ public class DBService {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("hh:mm");
 		
-		Usuario usuario1 = new Usuario(null, "Maria","eearg.ti.francisco@gmail.com","10098415871",CategoriaUsuario.SERVIDOR);
-		Usuario usuario2 = new Usuario(null, "Celio","celio@gmail.com","96098515871",CategoriaUsuario.ALUNO);
-		Usuario usuario3 = new Usuario(null, "Alan","alan@gmail.com","15668415871",CategoriaUsuario.VISITANTE);
+		Usuario usuario1 = new Usuario(null, "Maria",pe.encode("123"),"eearg.ti.francisco@gmail.com","10098415871",CategoriaUsuario.SERVIDOR);
+		Usuario usuario2 = new Usuario(null, "Celio",pe.encode("456"),"celio@gmail.com","96098515871",CategoriaUsuario.ALUNO);
+		Usuario usuario3 = new Usuario(null, "Alan",pe.encode("789"),"alan@gmail.com","15668415871",CategoriaUsuario.VISITANTE);
 		
 		usuarioRepository.save(Arrays.asList(usuario1, usuario2, usuario3));
 		

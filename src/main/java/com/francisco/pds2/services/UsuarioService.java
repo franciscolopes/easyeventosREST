@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.francisco.pds2.domain.Usuario;
@@ -23,6 +24,8 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepo;// automaticamente instanciada pelo spring por causa da anotação autowired
 	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	/*-----------VERFICA SE USUARIO DO QRCODE ESTA INSCRITO NA ATIVIDADE DO BLOCO-----------
 	public boolean verificaUsuarioCadastrado(Integer codUsuario, Integer codBloco) {
@@ -67,7 +70,7 @@ public class UsuarioService {
 	/*------INSERT NOVO USUARIO--------*/
 	public Usuario fromDTO(UsuarioNewDTO objDto) {
 
-		Usuario usuario = new Usuario(null, objDto.getNome(), 
+		Usuario usuario = new Usuario(null, objDto.getNome(), pe.encode(objDto.getSenha()), 
 				objDto.getEmail(), objDto.getCpf(), 
 				CategoriaUsuario.toEnum(objDto.getCategoria()));
 		//usuarioRepo.save(usuario);
@@ -102,7 +105,7 @@ public class UsuarioService {
 	}
 
 	public Usuario fromDTO(UsuarioDTO objDto) {
-		return new Usuario(objDto.getCodUsuario(), objDto.getNome(), objDto.getEmail(), null, null);
+		return new Usuario(objDto.getCodUsuario(), objDto.getNome(),null, objDto.getEmail(), null, null);
 	}
 
 	private void updateData(Usuario newObj, Usuario obj) {

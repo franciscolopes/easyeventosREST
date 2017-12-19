@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.francisco.pds2.domain.enums.CategoriaUsuario;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -30,6 +31,10 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Integer codUsuario;
 	private String nome;
+	
+	@JsonIgnore
+	private String senha;
+	
 	private String email;
 	private String cpf;
 	private Integer categoria;
@@ -42,10 +47,11 @@ public class Usuario implements Serializable{
 
 	}
 
-	public Usuario(Integer codUsuario, String nome, String email, String cpf, CategoriaUsuario categoria) {
+	public Usuario(Integer codUsuario, String nome, String senha, String email, String cpf, CategoriaUsuario categoria) {
 		super();
 		this.codUsuario = codUsuario;
 		this.nome = nome;
+		this.senha = senha;
 		this.email = email;
 		this.cpf = cpf;
 		this.categoria = (categoria==null) ? null : categoria.getCod();
@@ -83,6 +89,14 @@ public class Usuario implements Serializable{
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getEmail() {
