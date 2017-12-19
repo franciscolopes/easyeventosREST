@@ -51,6 +51,7 @@ public class DBService {
 		
 		Evento evento1 = new Evento (null, "SNCT2017",sdf.parse("23/10/2017"),sdf.parse("27/10/2017"),"A Semana Nacional de Ciência e Tecnologia - SNCT - é coordenada pelo Ministério de Ciência e Tecnologia e tem como objetivo aproximar a Ciência e a Tecnologia da população.");
 		Evento evento2 = new Evento (null, "3ª Mostra de Trabalhos do IFTM",sdf.parse("24/10/2017"),sdf.parse("24/10/2017")," Mostra de Trabalhos da Semana Nacional de Ciência e Tecnologia, a ocorrer no IFTM Campus Uberlândia Centro.");
+		//Evento evento3 = new Evento (null, "TESTE",sdf.parse("24/10/2017"),sdf.parse("24/10/2017")," TESTE");
 		eventoRepository.save(Arrays.asList(evento1, evento2));
 		
 		
