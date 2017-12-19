@@ -75,7 +75,7 @@ public class InscricaoService {
 		atividade.getInscricoes().addAll(Arrays.asList(inscricao));
 
 		usuario.getInscricoes().addAll(Arrays.asList(inscricao));
-
+		System.out.println(inscricao);
 		return inscricao;
 	}
 	/*------INSERT NOVA INSCRIÇÃO--------*/

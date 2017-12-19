@@ -1,6 +1,7 @@
 package com.francisco.pds2.domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.EmbeddedId;
@@ -121,6 +122,20 @@ public class Inscricao implements Serializable{
 		return baseQrcode;
 	}
 	/*-----------QRCODE-----------*/
+
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		StringBuilder builder = new StringBuilder();
+		builder.append("Evento: ");
+		builder.append(getId().getAtividade().getEvento().getNome());
+		builder.append(", Atividade: ");
+		builder.append(getId().getAtividade().getNome());
+		builder.append(", Data de inscricao: ");
+		builder.append(sdf.format(dataInscricao));
+		builder.append("\n");
+		return builder.toString();
+	}
 
 	
 }
