@@ -1,12 +1,14 @@
 package com.francisco.pds2.services;
 
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.francisco.pds2.domain.Atividade;
@@ -105,5 +107,17 @@ public class InscricaoService {
 		 		return inscricaoRepo.findBycodEvento(codEvento, pageRequest);	
 		 	}
 	/*------BUSCA INSCRIÇÕES POR EVENTO--------*/
+	
+	
+	public Page<Inscricao> buscaInscricaoPorAtividade(Integer codAtividade, Integer page, Integer linesPerPage, String orderBy, String direction) {
+ 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+ 		Atividade atividade = atividadeRepo.findOne(codAtividade);
+ 		return inscricaoRepo.findByIdAtividade(atividade, pageRequest);	
+ 	}
+	
+	
+	
+	
+	
 
 }

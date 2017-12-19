@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.francisco.pds2.domain.Atividade;
 import com.francisco.pds2.domain.Inscricao;
 import com.francisco.pds2.domain.Usuario;
+import com.francisco.pds2.dto.InscricaoDTO;
 import com.francisco.pds2.dto.InscricaoNewDTO;
 import com.francisco.pds2.services.AtividadeService;
 import com.francisco.pds2.services.InscricaoService;
@@ -85,15 +87,7 @@ public class InscricaoResource {
 		return ResponseEntity.created(uri).build();
 	}
 	/*------NOVA INSCRICAO--------*/
-	/*
-	 * @RequestMapping(value="/{usuario_id}/conf/{atividade_id}",
-	 * method=RequestMethod.GET) public ResponseEntity<?> find(@PathVariable Integer
-	 * usuario_id, @PathVariable Integer atividade_id) {
-	 * 
-	 * 
-	 * Inscricao obj = service.find(usuario_id, atividade_id); return
-	 * ResponseEntity.ok().body(obj); }
-	 */
+
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Inscricao>> findAll() {
@@ -101,12 +95,6 @@ public class InscricaoResource {
 		return ResponseEntity.ok().body(list);
 	}
 
-	/*@RequestMapping(value = "/teste", method = RequestMethod.GET)
-	public ResponseEntity<Inscricao> find() {
-
-		Inscricao obj = service.find();
-		return ResponseEntity.ok().body(obj);
-	}*/
 
 	/*------------------*/
 	@RequestMapping("/teste2")
@@ -117,4 +105,24 @@ public class InscricaoResource {
 
 	//URL de teste : http://localhost:8080/inscricoes/teste2?codUsuario=1&codAtividade=1
 	/*------------------*/
+	
+	
+	//teste http://localhost:8080/inscricoes/rel?codAtividade=2
+	@RequestMapping(value = "/rel", method = RequestMethod.GET)
+	public ResponseEntity<Page<InscricaoDTO>> findPage(
+			@RequestParam(value = "codAtividade", defaultValue = "0") Integer codAtividade,
+			@RequestParam(value = "page", defaultValue = "0") Integer page,
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+			@RequestParam(value = "orderBy", defaultValue = "dataInscricao") String orderBy,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+		Page<Inscricao> list = inscricaoService.buscaInscricaoPorAtividade(codAtividade,page, linesPerPage, orderBy, direction);
+		Page<InscricaoDTO> listDto = list.map(obj -> new InscricaoDTO(obj));
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	
+	
+	
+	
+	
 }
