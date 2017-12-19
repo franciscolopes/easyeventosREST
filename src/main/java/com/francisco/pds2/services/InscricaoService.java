@@ -32,6 +32,11 @@ public class InscricaoService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepo;
+	
+	
+	@Autowired
+	private EmailService emailService;
+	
 
 	/*
 	 * public Inscricao find(Integer usuario_id, Integer atividade_id) { Inscricao
@@ -75,7 +80,7 @@ public class InscricaoService {
 		atividade.getInscricoes().addAll(Arrays.asList(inscricao));
 
 		usuario.getInscricoes().addAll(Arrays.asList(inscricao));
-		System.out.println(inscricao);
+		emailService.sendOrderConfirmationEmail(inscricao);
 		return inscricao;
 	}
 	/*------INSERT NOVA INSCRIÇÃO--------*/
