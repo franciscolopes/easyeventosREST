@@ -15,13 +15,14 @@ import com.francisco.pds2.domain.InscricaoPK;
 @Repository
 public interface InscricaoRepository extends JpaRepository<Inscricao, InscricaoPK>{
 	
-	//List<Inscricao> findByInscricaopkAtividade(Atividade atividade);
+	
 	
 	@Transactional(readOnly=true)
 	//@Query//("SELECT obj FROM Inscricao obj WHERE obj.id.atividade = :atividade")
 	Page<Inscricao> findByIdAtividade(/*@Param("atividade")*/ Atividade atividade, Pageable pageRequest);
 	  
-	
+	@Transactional(readOnly=true)
+	Page<Inscricao> findByIdAtividadeEventoCodEvento(Integer codEvento, Pageable pageRequest);
 	
 
 }

@@ -76,10 +76,7 @@ public class AtividadeDTO implements Serializable {
 		atividadeAtiva =  obj.getAtividadeAtiva();
 	}
 	
-	
-	
-	
-	
+
 	public Integer getNroVagas() {
 		return nroVagas;
 	}

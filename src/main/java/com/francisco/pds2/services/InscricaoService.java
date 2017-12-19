@@ -49,16 +49,10 @@ public class InscricaoService {
 	}
 	/*------INSERT --------*/
 
-	
-	
 	public void marcaPresenca(Inscricao inscricao) {
 		inscricaoRepo.save(inscricao);
 	}
-	
-	
-	
-	
-	
+
 	/*------INSERT NOVA INSCRIÇÃO--------*/
 	public Inscricao fromDTO(InscricaoNewDTO objDto) {
 
@@ -107,17 +101,19 @@ public class InscricaoService {
 		 		return inscricaoRepo.findBycodEvento(codEvento, pageRequest);	
 		 	}
 	/*------BUSCA INSCRIÇÕES POR EVENTO--------*/
-	
-	
-	public Page<Inscricao> buscaInscricaoPorAtividade(Integer codAtividade, Integer page, Integer linesPerPage, String orderBy, String direction) {
- 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
- 		Atividade atividade = atividadeRepo.findOne(codAtividade);
- 		return inscricaoRepo.findByIdAtividade(atividade, pageRequest);	
- 	}
-	
-	
-	
-	
-	
+
+	public Page<Inscricao> buscaInscricaoPorAtividade(Integer codAtividade, Integer page, Integer linesPerPage,
+			String orderBy, String direction) {
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Atividade atividade = atividadeRepo.findOne(codAtividade);
+		return inscricaoRepo.findByIdAtividade(atividade, pageRequest);
+	}
+
+	public Page<Inscricao> buscaInscricaoPorEvento(Integer codEvento, Integer page, Integer linesPerPage,
+			String orderBy, String direction) {
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		
+		return inscricaoRepo.findByIdAtividadeEventoCodEvento(codEvento, pageRequest);
+	}
 
 }

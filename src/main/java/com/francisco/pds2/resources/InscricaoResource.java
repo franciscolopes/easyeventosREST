@@ -122,6 +122,23 @@ public class InscricaoResource {
 	
 	
 	
+	@RequestMapping(value = "/rel2", method = RequestMethod.GET)
+ 	public ResponseEntity<Page<InscricaoDTO>> findPage2(
+ 			@RequestParam(value = "codEvento", defaultValue = "0") Integer codEvento,
+ 			@RequestParam(value = "page", defaultValue = "0") Integer page,
+ 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+ 			@RequestParam(value = "orderBy", defaultValue = "dataInscricao") String orderBy,
+ 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+ 		Page<Inscricao> list = inscricaoService.buscaInscricaoPorEvento(codEvento,page, linesPerPage, orderBy, direction);
+ 		Page<InscricaoDTO> listDto = list.map(obj -> new InscricaoDTO(obj));
+ 		return ResponseEntity.ok().body(listDto);
+ 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
