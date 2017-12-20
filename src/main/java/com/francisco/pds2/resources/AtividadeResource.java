@@ -110,6 +110,19 @@ public class AtividadeResource {
   		return ResponseEntity.ok().body(listDto);
   	}
 	
+	@RequestMapping(value = "/rel3", method = RequestMethod.GET)
+  	public ResponseEntity<Page<AtividadeDTO>> findPage3(
+  			@RequestParam(value = "page", defaultValue = "0") Integer page,
+  			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+  			@RequestParam(value = "orderBy", defaultValue = "dataInicio") String orderBy,
+  			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+  		Page<Atividade> list = service.buscaAtividadePorUsuarioAutomatico(page, linesPerPage, orderBy, direction);
+  		Page<AtividadeDTO> listDto = list.map(obj -> new AtividadeDTO(obj));
+  		return ResponseEntity.ok().body(listDto);
+  	}
+	
+	
+	
 	
 	
 }

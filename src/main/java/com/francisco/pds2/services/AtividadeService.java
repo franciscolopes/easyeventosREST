@@ -20,6 +20,8 @@ import com.francisco.pds2.repositories.AtividadeRepository;
 import com.francisco.pds2.repositories.EventoRepository;
 import com.francisco.pds2.repositories.LocalRepository;
 import com.francisco.pds2.repositories.UsuarioRepository;
+import com.francisco.pds2.security.UserSS;
+import com.francisco.pds2.services.exceptions.AuthorizationException;
 import com.francisco.pds2.services.exceptions.DataIntegrityException;
 import com.francisco.pds2.services.exceptions.ObjectNotFoundException;
 
@@ -34,10 +36,9 @@ public class AtividadeService {
 
 	@Autowired
 	private LocalRepository localRepo;
-	
+
 	@Autowired
 	private UsuarioRepository usuarioRepo;
-	
 
 	public Atividade buscar(Integer codAtividade) {
 		Atividade obj = atividadeRepo.findOne(codAtividade);
@@ -51,50 +52,48 @@ public class AtividadeService {
 
 	/*--------INSERT--------*/
 	public Atividade insert(Atividade obj) {
-		//obj.setCodAtividade(null);
+		// obj.setCodAtividade(null);
 		obj = atividadeRepo.save(obj);
-		
+
 		return obj;
 	}
 
 	/*--------INSERT--------*/
-	
+
 	/*------INSERT NOVA ATIVIDADE--------*/
 	public Atividade fromDTO(AtividadeNewDTO objDto) {
 
 		Evento evento = eventoRepo.findOne(objDto.getCodEvento());
 		Local local = localRepo.findOne(objDto.getCodLocal());
-		Atividade atividade = new Atividade(null, objDto.getNome(), objDto.getMinistrante(),
-				objDto.getHorarioInicio(), objDto.getHorarioFim(), objDto.getDataInicio(),
-				objDto.getDataFim(), objDto.getDescricao(), objDto.getNroVagas(),
-				objDto.getTipoAtividade(), objDto.getInscricaoAberta(), objDto.getAtividadeAtiva(), evento);
+		Atividade atividade = new Atividade(null, objDto.getNome(), objDto.getMinistrante(), objDto.getHorarioInicio(),
+				objDto.getHorarioFim(), objDto.getDataInicio(), objDto.getDataFim(), objDto.getDescricao(),
+				objDto.getNroVagas(), objDto.getTipoAtividade(), objDto.getInscricaoAberta(),
+				objDto.getAtividadeAtiva(), evento);
 
-		//atividadeRepo.save(atividade);
-		
+		// atividadeRepo.save(atividade);
+
 		atividade.setLocal(local);
-		
+
 		atividadeRepo.save(atividade);
 		local.setAtividade(atividade);
 		localRepo.save(local);
-		
+
 		evento.getAtividades().addAll(Arrays.asList(atividade));
-	
+
 		return atividade;
 	}
 	/*------INSERT NOVA ATIVIDADE--------*/
 
-	
-	
 	/*------BUSCA ATIVIDADES POR USUARIO--------
 	
 	
 	public Page<Atividade> search(Integer codUsuario, Integer page, Integer linesPerPage, String orderBy, String direction) {
- 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
- 		
- 		return atividadeRepo.findBycodUsuario(codUsuario, pageRequest);	
- 	}
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		
+		return atividadeRepo.findBycodUsuario(codUsuario, pageRequest);	
+	}
 	
-
+	
 	/*------BUSCA ATIVIDADES POR USUARIO--------*/
 
 	public List<Atividade> findAll() {
@@ -114,8 +113,6 @@ public class AtividadeService {
 				objDto.getAtividadeAtiva(), null);
 
 	}
-
-	
 
 	public Atividade update(Atividade obj) {
 		Atividade newObj = buscar(obj.getCodAtividade());
@@ -146,20 +143,41 @@ public class AtividadeService {
 			throw new DataIntegrityException("Não é possível excluir pois há entidades relacionadas");
 		}
 	}
-	
+
 	public Page<Atividade> buscaAtividadePorEvento(Integer codEvento, Integer page, Integer linesPerPage,
- 			String orderBy, String direction) {
- 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
- 		
- 		return atividadeRepo.findByEventoCodEvento(codEvento, pageRequest);
- 	}
-	
+			String orderBy, String direction) {
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+
+		return atividadeRepo.findByEventoCodEvento(codEvento, pageRequest);
+	}
+
 	public Page<Atividade> buscaAtividadePorUsuario(Integer codUsuario, Integer page, Integer linesPerPage,
- 			String orderBy, String direction) {
- 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
- 		Usuario usuario = usuarioRepo.findOne(codUsuario);
- 		return atividadeRepo.findByInscricoesIdUsuario(usuario, pageRequest);
- 	}
+			String orderBy, String direction) {
+
+		/*--VERIFICA SE USUARIO ESTA LOGADO---*/
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		/*--VERIFICA SE USUARIO ESTA LOGADO---*/
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Usuario usuario = usuarioRepo.findOne(codUsuario);
+		return atividadeRepo.findByInscricoesIdUsuario(usuario, pageRequest);
+	}
+	
+	public Page<Atividade> buscaAtividadePorUsuarioAutomatico(Integer page, Integer linesPerPage,
+			String orderBy, String direction) {
+
+		/*--VERIFICA SE USUARIO ESTA LOGADO---*/
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		/*--VERIFICA SE USUARIO ESTA LOGADO---*/
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Usuario usuario = usuarioRepo.findOne(user.getId());
+		return atividadeRepo.findByInscricoesIdUsuario(usuario, pageRequest);
+	}
 	
 	
 
