@@ -45,7 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {// TODOS USUARIOS LOGADOS PODEM DAR POST NESSES ENPOINTS
   			"/usuarios/**",
-  			"/inscricoes/**"
+  			"/inscricoes/**", 
+  			"/auth/forgot/**"
   	};
 	
 	
