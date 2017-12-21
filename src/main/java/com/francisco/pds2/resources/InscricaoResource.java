@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -88,7 +89,7 @@ public class InscricaoResource {
 	}
 	/*------NOVA INSCRICAO--------*/
 
-
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Inscricao>> findAll() {
 		List<Inscricao> list = inscricaoService.findAll();
@@ -97,6 +98,7 @@ public class InscricaoResource {
 
 
 	/*------------------*/
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping("/teste2")
 	public @ResponseBody Inscricao getInscricao(@RequestParam int codUsuario, @RequestParam int codAtividade) {
 		Inscricao obj = inscricaoService.find(codUsuario, codAtividade);
@@ -108,6 +110,7 @@ public class InscricaoResource {
 	
 	
 	//teste http://localhost:8080/inscricoes/rel?codAtividade=2
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/rel", method = RequestMethod.GET)
 	public ResponseEntity<Page<InscricaoDTO>> findPage(
 			@RequestParam(value = "codAtividade", defaultValue = "0") Integer codAtividade,
@@ -121,7 +124,7 @@ public class InscricaoResource {
 	}
 	
 	
-	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/rel2", method = RequestMethod.GET)
  	public ResponseEntity<Page<InscricaoDTO>> findPage2(
  			@RequestParam(value = "codEvento", defaultValue = "0") Integer codEvento,

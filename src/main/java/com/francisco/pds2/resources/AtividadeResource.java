@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +39,7 @@ public class AtividadeResource {
 	}
 	
 	/*------NOVA ATIVIDADE--------*/
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody AtividadeNewDTO objDto) {
 		Atividade obj = service.fromDTO(objDto);
@@ -47,7 +49,7 @@ public class AtividadeResource {
 		return ResponseEntity.created(uri).build();
 	}
 	/*------NOVA ATIVIDADE--------*/
-	
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{codAtividade}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody AtividadeDTO objDto, @PathVariable Integer codAtividade) {
 		Atividade obj = service.fromDTO(objDto);
@@ -56,6 +58,7 @@ public class AtividadeResource {
 		return ResponseEntity.noContent().build();
 	}
 
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{codAtividade}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer codAtividade) {
 		service.delete(codAtividade);
@@ -106,6 +109,19 @@ public class AtividadeResource {
   		Page<AtividadeDTO> listDto = list.map(obj -> new AtividadeDTO(obj));
   		return ResponseEntity.ok().body(listDto);
   	}
+	
+	@RequestMapping(value = "/rel3", method = RequestMethod.GET)
+  	public ResponseEntity<Page<AtividadeDTO>> findPage3(
+  			@RequestParam(value = "page", defaultValue = "0") Integer page,
+  			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+  			@RequestParam(value = "orderBy", defaultValue = "dataInicio") String orderBy,
+  			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+  		Page<Atividade> list = service.buscaAtividadePorUsuarioAutomatico(page, linesPerPage, orderBy, direction);
+  		Page<AtividadeDTO> listDto = list.map(obj -> new AtividadeDTO(obj));
+  		return ResponseEntity.ok().body(listDto);
+  	}
+	
+	
 	
 	
 	
